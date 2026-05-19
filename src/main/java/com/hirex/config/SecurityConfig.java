@@ -63,9 +63,9 @@ public class SecurityConfig {
     public CorsConfigurationSource corsSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
-                "https://job-portal-frontend-avtp.onrender.com",
                 "http://localhost:3000",
-                "http://localhost:5173"  // if using Vite
+                "https://job-portal-frontend-avtp.onrender.com"
+                  // if using Vite
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
