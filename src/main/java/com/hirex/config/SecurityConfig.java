@@ -33,18 +33,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsSource()))
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/jobs/browse").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/manager/**").hasRole("MANAGER")
-                .requestMatchers("/api/jobseeker/**").hasRole("JOBSEEKER")
-                .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsSource()))
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/jobs/browse").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/manager/**").hasRole("MANAGER")
+                        .requestMatchers("/api/jobseeker/**").hasRole("JOBSEEKER")
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -59,7 +59,7 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-//    @Bean
+    //    @Bean
 //    public CorsConfigurationSource corsSource() {
 //        CorsConfiguration config = new CorsConfiguration();
 //        config.setAllowedOrigins(List.of(
@@ -75,22 +75,22 @@ public class SecurityConfig {
 //        source.registerCorsConfiguration("/**", config);
 //        return source;
 //    }
-@Bean
-public CorsConfigurationSource corsSource() {
-    CorsConfiguration config = new CorsConfiguration();
+    @Bean
+    public CorsConfigurationSource corsSource() {
+        CorsConfiguration config = new CorsConfiguration();
 
-    config.setAllowedOrigins(List.of(
+        config.setAllowedOrigins(List.of(
 //            "http://localhost:3000"
-           " https://job-portal-frontend-avtp.onrender.com"
-    ));
+               " https://job-portal-frontend-avtp.onrender.com"
+        ));
 
-    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    config.setAllowedHeaders(List.of("*"));
-    config.setAllowCredentials(true);
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
 
-    return source;
-}
+        return source;
+    }
 }
