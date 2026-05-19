@@ -32,13 +32,15 @@ public class JwtUtil {
                 .compact();
     }
 
+
     public String getEmail(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getKey()).build()
+                    .parseClaimsJws(token).getBody().getSubject();
+        } catch (JwtException e) {
+            return null; // JwtFilter already handles null
+        }
     }
 
     public boolean isValid(String token, UserDetails userDetails) {
@@ -46,13 +48,23 @@ public class JwtUtil {
         return email.equals(userDetails.getUsername()) && !isExpired(token);
     }
 
-    private boolean isExpired(String token) {
+//    private boolean isExpired(String token) {
+//        return Jwts.parserBuilder()
+//                .setSigningKey(getKey())
+//                .build()
+//                .parseClaimsJws(token)
+//                .getBody()
+//                .getExpiration()
+//                .before(new Date());
+//    }
+private boolean isExpired(String token) {
+    try {
         return Jwts.parserBuilder()
-                .setSigningKey(getKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration()
-                .before(new Date());
+                .setSigningKey(getKey()).build()
+                .parseClaimsJws(token).getBody()
+                .getExpiration().before(new Date());
+    } catch (ExpiredJwtException e) {
+        return true; // ✅ treat expired as expired
     }
+}
 }
