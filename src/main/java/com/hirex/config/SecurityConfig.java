@@ -80,8 +80,9 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(
-            "http://localhost:3000"
-//               " https://job-portal-frontend-avtp.onrender.com"
+//            "http://localhost:3000"
+               " https://job-portal-frontend-avtp.onrender.com"
+
         ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
