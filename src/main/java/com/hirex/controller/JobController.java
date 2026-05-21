@@ -19,7 +19,7 @@ public class JobController {
     }
 
     // public browse - no auth needed
-    @GetMapping("/api/jobs/browse")
+    @GetMapping("/jobs/browse")
     public ResponseEntity<List<JobResponse>> browse(@RequestParam(required = false) String keyword) {
         if (keyword != null && !keyword.isBlank()) {
             return ResponseEntity.ok(jobService.searchJobs(keyword));
@@ -27,25 +27,25 @@ public class JobController {
         return ResponseEntity.ok(jobService.getAllActiveJobs());
     }
 
-    @PostMapping("/api/manager/jobs")
+    @PostMapping("/manager/jobs")
     public ResponseEntity<JobResponse> createJob(@RequestBody JobRequest req, Principal principal) {
         return ResponseEntity.ok(jobService.createJob(req, principal.getName()));
     }
 
-    @PutMapping("/api/manager/jobs/{id}")
+    @PutMapping("/manager/jobs/{id}")
     public ResponseEntity<JobResponse> updateJob(@PathVariable Long id,
                                                   @RequestBody JobRequest req,
                                                   Principal principal) {
         return ResponseEntity.ok(jobService.updateJob(id, req, principal.getName()));
     }
 
-    @DeleteMapping("/api/manager/jobs/{id}")
+    @DeleteMapping("/manager/jobs/{id}")
     public ResponseEntity<String> deleteJob(@PathVariable Long id, Principal principal) {
         jobService.deleteJob(id, principal.getName());
         return ResponseEntity.ok("Job removed");
     }
 
-    @GetMapping("/api/manager/jobs")
+    @GetMapping("/manager/jobs")
     public ResponseEntity<List<JobResponse>> myJobs(Principal principal) {
         return ResponseEntity.ok(jobService.getManagerJobs(principal.getName()));
     }

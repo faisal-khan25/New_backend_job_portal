@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/jobseeker/profile")
+@RequestMapping("/jobseeker/profile")
 public class ProfileController {
 
     private final JobSeekerProfileRepository profileRepo;

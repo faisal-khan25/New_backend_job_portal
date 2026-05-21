@@ -17,24 +17,24 @@ public class ApplicationController {
         this.appService = appService;
     }
 
-    @PostMapping("/api/jobseeker/apply/{jobId}")
+    @PostMapping("/jobseeker/apply/{jobId}")
     public ResponseEntity<String> apply(@PathVariable Long jobId,
                                          @RequestBody ApplyRequest req,
                                          Principal principal) {
         return ResponseEntity.ok(appService.apply(jobId, req.getCoverLetter(), principal.getName()));
     }
 
-    @GetMapping("/api/jobseeker/applications")
+    @GetMapping("/jobseeker/applications")
     public ResponseEntity<List<AppResponse>> myApplications(Principal principal) {
         return ResponseEntity.ok(appService.getMyApplications(principal.getName()));
     }
 
-    @GetMapping("/api/manager/jobs/{jobId}/applicants")
+    @GetMapping("/manager/jobs/{jobId}/applicants")
     public ResponseEntity<List<AppResponse>> applicants(@PathVariable Long jobId, Principal principal) {
         return ResponseEntity.ok(appService.getApplicantsForJob(jobId, principal.getName()));
     }
 
-    @PutMapping("/api/manager/applications/{appId}/status")
+    @PutMapping("/manager/applications/{appId}/status")
     public ResponseEntity<AppResponse> updateStatus(@PathVariable Long appId,
                                                      @RequestBody StatusRequest req,
                                                      Principal principal) {
